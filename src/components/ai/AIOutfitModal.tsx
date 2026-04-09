@@ -394,7 +394,7 @@ const AIOutfitModal: React.FC<AIOutfitModalProps> = ({
       setResult({
         id: Date.now().toString(),
         title: mode === 'inspiration' ? 'AI 灵感生成' : 'AI 智能搭配',
-        desc: `AI 根据"${promptContext}"为您生成了这套 Look。\n\n⚠️ 当前为 Demo 演示模式，虚拟试衣仅提供占位图展示。实际版本将通过阿里云百炼 AI 试衣 API 生成真实的上身效果图。`,
+        desc: `AI 根据"${promptContext}"为您生成了这套 Look。\n\n⚠️ 当前为 Demo 演示模式，虚拟试衣仅提供占位图展示。`,
         fittedImage: topItem?.img || selectedOutfitItems[0]?.img || '/models/women1.png',
         items: selectedOutfitItems,
       });
