@@ -3,6 +3,7 @@ import { X, Wand2, Shirt, Sparkles, Check, RefreshCcw, Download, CalendarPlus, A
 import { ClothingItem, WeatherData, Outfit, OutfitItem } from '../../types';
 import { uploadApi, tryonApi, aiApi, isLoggedIn } from '../../api';
 import { getModelsByGender } from '../../data/builtinModels';
+import { isDemoMode } from '../../mock/demoApi';
 
 // 辅助函数：检查图片是否是 base64 格式
 const isBase64Image = (url: string | undefined): boolean => {
@@ -384,6 +385,23 @@ const AIOutfitModal: React.FC<AIOutfitModalProps> = ({
     const selectedOutfitItems = candidates[selectedCandidateIdx];
     const itemNames = selectedOutfitItems.map(i => i.name).join(', ');
     const promptContext = mode === 'inspiration' ? `搭配 ${itemNames}` : inputText || userStyles.join(', ');
+
+    // Demo 模式：跳过真实 AI 试衣，直接展示模拟结果
+    if (isDemoMode()) {
+      setLoadingText("AI 正在为您换装...");
+      await new Promise(r => setTimeout(r, 1500));
+      const topItem = selectedOutfitItems.find(i => i.category === '上衣');
+      setResult({
+        id: Date.now().toString(),
+        title: mode === 'inspiration' ? 'AI 灵感生成' : 'AI 智能搭配',
+        desc: `AI 根据"${promptContext}"为您生成了这套 Look。\n\n⚠️ 当前为 Demo 演示模式，虚拟试衣仅提供占位图展示。实际版本将通过阿里云百炼 AI 试衣 API 生成真实的上身效果图。`,
+        fittedImage: topItem?.img || selectedOutfitItems[0]?.img || '/models/women1.png',
+        items: selectedOutfitItems,
+      });
+      setStep('result');
+      setIsGenerating(false);
+      return;
+    }
 
     const getGarmentInfo = () => {
       const garments: { image: string; name: string; category: string }[] = [];
