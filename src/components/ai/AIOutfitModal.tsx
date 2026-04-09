@@ -984,6 +984,14 @@ const AIOutfitModal: React.FC<AIOutfitModalProps> = ({
                                 AI 虚拟试穿效果
                             </div>
                         </div>
+                        {/* Demo Mode Notice */}
+                        {isDemoMode() && result.fittedImage && (
+                          <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent pt-10 pb-4 px-5">
+                            <p className="text-white/90 text-[11px] font-medium text-center leading-relaxed">
+                              ⚠️ 当前为 Demo 演示模式，虚拟试衣仅提供占位图展示。
+                            </p>
+                          </div>
+                        )}
                         
                         <div className="absolute top-6 right-6 flex flex-col gap-2">
                             <button
