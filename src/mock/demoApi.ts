@@ -104,7 +104,7 @@ const routes: Record<string, Record<string, RouteHandler>> = {
 
   // ---- Try-on ----
   'POST /tryon/generate': {
-    handler: () => ok({ taskId: 'demo-tryon-001', status: 'completed' }),
+    handler: () => ok({ taskId: 'demo-tryon-001', status: 'succeeded' }),
   },
 
   // ---- Upload ----
@@ -223,12 +223,12 @@ const dynamicRoutes: Array<{
   {
     pattern: /^\/tryon\/status\/(.+)$/,
     method: 'GET',
-    handler: () => ok({ status: 'completed', progress: 100 }),
+    handler: () => ok({ status: 'succeeded', progress: 100, resultImageUrl: '/models/women1.png' }),
   },
   {
     pattern: /^\/tryon\/result\/(.+)$/,
     method: 'GET',
-    handler: () => ok({ imageUrl: '/demo/clothes/wps (6).png', status: 'completed' }),
+    handler: () => ok({ imageUrl: '/models/women1.png', status: 'succeeded' }),
   },
   {
     pattern: /^\/record\/clothes\/([^/]+)\/stats$/,
